@@ -20,7 +20,7 @@ PORT   STATE SERVICE REASON
 ## Examining the Web Page and Its Infrastructure
 We access the web page hosted on the Apache server and find this:
 
-![](Imagenes/Borazu_1.png)
+![Descripción de Borazu](Imagenes/Borazu_1.png)
 
 The first thing that comes to mind is to analyze the web page in search of strange links or any clues. As I don't find anything, I decide to investigate if there are hidden files or directories. For this, I'm going to use the Gobuster application.
 
