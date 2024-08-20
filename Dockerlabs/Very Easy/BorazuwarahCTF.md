@@ -34,11 +34,11 @@ It doesn't find anything, so the only thing I can think of is that the Kinder eg
 
 To find out, I'm going to use the Exiftool and Steghide tools, including the script created in the other section to perform a brute force attack on the image.
 
-![[Pasted image 20240808103308.png]]
+![Descripción de Borazu](Imagenes/Borazu_2.png)
 
 We see that both in the description and in "Title" a username or password appears. Additionally, using the script to extract a possible embedded file, we extract the file "secreto.txt" with the following message.
 
-![[Pasted image 20240808104002.png]]
+![Descripción de Borazu](Imagenes/Borazu_3.png)
 
 ## Intrusion
 
@@ -50,6 +50,6 @@ For this, I'm going to use the Hydra tool
 hydra -l borazuwarah -P rockyou.txt -t 10 -w 1 ssh://172.0.17.2
 ```
 
-![[Pasted image 20240808105649.png]]
+![Descripción de Borazu](Imagenes/Borazu_4.png)
 
 Hydra obtains the password for that given user, so we can now connect to the SSH service.
