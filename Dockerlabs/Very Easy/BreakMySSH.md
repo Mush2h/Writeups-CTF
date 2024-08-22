@@ -22,5 +22,6 @@ Now, I'm going to run a more exhaustive scan using some of the scripts implement
 ![Descripción de Break](Imagenes/Break_1.png)
 
 We can see how it extracts the username and password. In our case, the username is 'root' and the password is 'estrella'
+
 ![Descripción de Break](Imagenes/Break_2.png)
 ![Descripción de Break](Imagenes/Break_3.png)
