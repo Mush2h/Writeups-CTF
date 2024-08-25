@@ -1,0 +1,25 @@
+# FirstHacking
+
+## Port Enumeration
+
+To begin our scan, we use the Nmap tool during our discovery phase. As we can see, we have the following open ports:
+
+```ruby
+nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 172.17.0.2
+```
+
+```ruby
+┌──(root㉿kali)-[/home/kali]
+└─# nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 172.17.0.2  
+PORT   STATE SERVICE REASON
+21/tcp open  ftp     syn-ack ttl 64
+
+```
+![Descripción de First](Imagenes/First_1.png)
+
+![Descripción de First](Imagenes/First_2.png)
+
+https://github.com/Hellsender01/vsftpd_2.3.4_Exploit/tree/main
+
+
+![Descripción de First](Imagenes/First_3.png)
