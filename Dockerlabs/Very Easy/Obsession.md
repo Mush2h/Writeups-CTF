@@ -17,37 +17,37 @@ PORT   STATE SERVICE REASON
 80/tcp open  http    syn-ack ttl 64
 
 ```
-vamos a hacer un escaneo más dirigido a los servicios que tenemos
-Para el servicio FTP utilizamos este tipo de escaneo que prueba algunos script tipicos:
+Let's perform a more targeted scan of the services we have.
+For the FTP service, we use this type of scan that tests some typical scripts:
 
 ```ruby
 nmap -p21 -T4 --min-rate 1000 --script vuln,ftp-anon,ftp-bounce,ftp-syst 172.17.0.2
 ```
 ![Descripción de Obssesion](Imagenes/Obssesion_1.png)
 
-Vemos como esta permitido el usuario y contraseña anonymous por defecto y encontramos dos fichero interesante.
-chat_gonza.txt y pendientes.txt.
+We see that the default anonymous user and password are allowed, and we find two interesting files:
+chat_gonza.txt and pendientes.txt.
 
-Por lo tanto nos lo descargamos para poder ver el contenido de los dos ficheros con el siguiente comando una vez que estamos dentro del 
-servicio ftp:
+Therefore, we download them to view the contents of both files with the following command once we're inside the
+FTP service:
 
 ![Descripción de Obssesion](Imagenes/Obssesion_2.png)
 
-De la misma forma hacemois un escaneo mas particular para el servicio ssh 
+Similarly, we perform a more specific scan for the SSH service:
 
 ```ruby
 nmap -p22 -T4 --min-rate 1000 --script vuln,ssh-auth-methods,ssh-publickey-acceptance,sshv1 172.17.0.2
 ```
 ![Descripción de Obssesion](Imagenes/Obssesion_3.png)
 
-sin embargo , no conseguimos nada relevante.
+However, we don't get anything relevant.
 
 
-vamos a ver que hay en la página web,si examinamos el código fuente 
-nos aparece esto: 
+Let's see what's on the web page. If we examine the source code,
+this appears:
 ![Descripción de Obssesion](Imagenes/Obssesion_4.png)
 
-Vamos a examinar los dos fichero que hemos descargado mediante el servicio ftp:
+Let's examine the two files we downloaded via the FTP service:
 
 fichero pendientes.txt
 
@@ -71,7 +71,7 @@ fichero chat_gonza.txt
 [21:53, 16/6/2024] Gonza: por cierto buen entreno el de hoy en el gym, noto los brazos bastante hinchados, así sí
 [22:36, 16/6/2024] Russoski: te lo dije, ya sabes que yo tengo buenos gustos para estas cosas xD, y sí buen training hoy
 ```
-Podemos ver que hay tres usuarios potenciales "Gonza" , "Russoski" y "Nagore" por lo tanto vamos probar si algun de estos usuarios nos permite acceder al servicio ssh para ello voy autilizar la herramienta hydra y el diccionario "rockyou.txt".
+We can see that there are three potential users "Gonza", "Russoski" and "Nagore", so we're going to try if any of these users allow us to access the SSH service. For this, I'm going to use the hydra tool and the "rockyou.txt" dictionary.
 
 ```ruby
 hydra -l gonza -P rockyou.txt -t 16 -W 30 -f  ssh://172.17.0.2
@@ -80,21 +80,21 @@ hydra -l nagore -P rockyou.txt -t 16 -W 30 -f  ssh://172.17.0.2
 ```
 ![Descripción de Obssesion](Imagenes/Obssesion_5.png)
 
-Vemos como conseguimos la constraseña de russoski que es "iloveme",por lo tanto ya nos podemos conectar al servicio SSH:
+We see that we get russoski's password which is "iloveme", so we can now connect to the SSH service:
 
 ![Descripción de Obssesion](Imagenes/Obssesion_6.png)
 
 
 ## Escalada de privilegios
 
-Ejecutamos el comando :
+We execute the command:
 ```ruby
 sudo -l
 ```
 
 ![Descripción de Obssesion](Imagenes/Obssesion_7.png)
 
-Vemos que podemos ejecutar como root  el binario vim para ello vamos a GTobins y comprobamos si podemos eplotarlo:
+We see that we can execute the vim binary as root, so we go to GTFOBins and check if we can exploit it:
 
 ```ruby
 sudo vim -c ':!/bin/sh'
