@@ -87,6 +87,8 @@ We see that we get russoski's password which is "iloveme", so we can now connect
 
 ![Descripción de Obssesion](Imagenes/Obssesion_6.png)
 
+![Descripción de Obssesion](Imagenes/Obssesion_7.png)
+
 
 ## Privilege Escalation
 
@@ -94,8 +96,6 @@ We execute the command:
 ```ruby
 sudo -l
 ```
-
-![Descripción de Obssesion](Imagenes/Obssesion_7.png)
 
 We see that we can execute the vim binary as root, so we go to GTFOBins and check if we can exploit it:
 
