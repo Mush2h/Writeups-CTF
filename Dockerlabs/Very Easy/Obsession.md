@@ -42,11 +42,12 @@ nmap -p22 -T4 --min-rate 1000 --script vuln,ssh-auth-methods,ssh-publickey-accep
 
 However, we don't get anything relevant.
 
-
+## Examining the Web Page
 Let's see what's on the web page. If we examine the source code,
 this appears:
 ![Descripción de Obssesion](Imagenes/Obssesion_4.png)
 
+## Examining files
 Let's examine the two files we downloaded via the FTP service:
 
 fichero pendientes.txt
@@ -80,12 +81,14 @@ hydra -l nagore -P rockyou.txt -t 16 -W 30 -f  ssh://172.17.0.2
 ```
 ![Descripción de Obssesion](Imagenes/Obssesion_5.png)
 
+## Intrusion
+
 We see that we get russoski's password which is "iloveme", so we can now connect to the SSH service:
 
 ![Descripción de Obssesion](Imagenes/Obssesion_6.png)
 
 
-## Escalada de privilegios
+## Privilege Escalation
 
 We execute the command:
 ```ruby
