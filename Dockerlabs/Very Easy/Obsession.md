@@ -85,8 +85,6 @@ hydra -l nagore -P rockyou.txt -t 16 -W 30 -f  ssh://172.17.0.2
 
 We see that we get russoski's password which is "iloveme", so we can now connect to the SSH service:
 
-![Descripción de Obssesion](Imagenes/Obssesion_6.png)
-
 ![Descripción de Obssesion](Imagenes/Obssesion_7.png)
 
 
@@ -96,6 +94,8 @@ We execute the command:
 ```ruby
 sudo -l
 ```
+
+![Descripción de Obssesion](Imagenes/Obssesion_6.png)
 
 We see that we can execute the vim binary as root, so we go to GTFOBins and check if we can exploit it:
 
