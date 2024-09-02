@@ -45,12 +45,9 @@ Sin embargo no encontramos nada.
 
 foto exiftool 
 
-
-
-
 ## Intrusion
 
-Finalmente vamos a intentar identificarnos con:
+Finalmente vamos a intentar identificarnos en el servicio ssh:
 
 ``` ruby
 user: agua
@@ -60,3 +57,26 @@ password: bebeaguaqueessano
 foto de intrusion
 
 
+## Escalation privilege
+
+Con el comando id y vemos que pertenecemos al grupo lxd. Posiblemente si explotamos esta vulnerabilidad podamos escalar privilegios.
+
+Veremos que tenemos una archivo llamado alpine-v3.13-x86_64-20210218_0139.tar.gz que hace que sea casi seguro que debamos explotar el lxd. Pero no, esto no es más que un rabbit hole 
+
+Si realizamos un sudo -l vemos que podemos ejecutar como root el /usr/bin/bettercap.
+
+foto bettercap 
+
+si arimos el fihero como sudo podemos hacer que aparecezca nuestra bash con el siguiente comando 
+
+```ruby
+! chmod +s /bin/bash
+```
+
+cerramos la aplicacion y hacemos el siguiente comando:
+
+```ruby
+/bin/bash -p
+```
+
+finalmente vemos como somos usuarios root.
