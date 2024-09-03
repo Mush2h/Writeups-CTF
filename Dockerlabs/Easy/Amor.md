@@ -56,6 +56,7 @@ scp carlota@172.17.0.2:/home/carlota/Desktop/fotos/vacaciones/imagen.jpg /home/k
 ```
 
 ![alt text](Imagenes/Amor_3.png)
+
 We download the image and use tools like ExifTool or Steghide to check if there is any secret inside it.
 
 ![alt text](Imagenes/Amor_4.png)
