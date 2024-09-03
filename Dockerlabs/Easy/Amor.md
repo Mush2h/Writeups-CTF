@@ -35,7 +35,7 @@ gobuster dir -u http://172.17.0.2/ -t 200 -w /usr/share/wordlists/dirbuster/dire
 
 ```
 
-Sin embargo no encotramos nada por lo tanto vamos a realizar un ataque de fuerza bruta con la herramienta hydra con los dos usuarios.
+However, we don't find anything, so we're going to perform a brute force attack using the Hydra tool with the two users.
 
 ## Intrusion
 
@@ -51,7 +51,8 @@ foto de intrusion
 ## Examining the imagen.jpg 
 
  
-Si navegamos por los directorios nos encontramos una imagen, para analizarla, mejor vamos a descargarla con el siguiente comando:
+If we navigate through the directories, we find an image. To analyze it, it's better to download it with the following command:
+ruby
 
 ```ruby
 scp carlota@172.17.0.2:/home/carlota/Desktop/fotos/vacaciones/imagen.jpg /home/kali/Desktop/amor/
@@ -59,30 +60,32 @@ scp carlota@172.17.0.2:/home/carlota/Desktop/fotos/vacaciones/imagen.jpg /home/k
 
 We download the image and use tools like ExifTool or Steghide to check if there is any secret inside it.
 
-Vemos que si no introducimos ninguna contraseñas nos encontramos con un fichero secreto.txt que contiene este texto:
+We see that if we don't enter any password, we find a secreto.txt file that contains this text:
 
 ```ruby
 ZXNsYWNhc2FkZXBpbnlwb24=
 ```
 
-Parece que es texto en base64 por lo tanto vamos a decodificarlo con:
+It looks like Base64 text, so let's decode it with:
 
 ```ruby
 echo "ZXNsYWNhc2FkZXBpbnlwb24=" | base64 --decode
 ```
-Ese comando nos devuelve el siguiente texto:
+
+This command returns the following text:
 
 ```ruby
 lacasadepingypong
 ```
-Parece una posible contraseña de algun usuario.
+It seems like a possible password for some user.
 
-Si hacemos el comando hydra pero con el rockyou como usuario y la anterior contraseña obtenemos una coinicdencia 
+If we run the Hydra command but with rockyou as the username and the previous password, we get a match:
 ```ruby
 user: oscar
 pwd: lacasadepingypong
 ```
-por lo tanto accedemos con esas credenciales.
+
+Therefore, we access with these credentials..
 
 ## Escalation privilege
 
