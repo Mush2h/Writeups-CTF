@@ -27,6 +27,7 @@ Users:
 Juan
 Carlota
 ```
+
 Now we perform a subdomain enumeration using the tool GoBuster, obtaining the following:
 
 ```ruby
