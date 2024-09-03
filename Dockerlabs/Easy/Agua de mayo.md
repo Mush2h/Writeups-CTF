@@ -30,7 +30,7 @@ bebeaguaqueessano
 
 (Foto del traductor)
 
-Now we perform a subdomain enumeration using the tool DirBuster, obtaining the following:
+Now we perform a subdomain enumeration using the tool GoBuster, obtaining the following:
 
 ```ruby
 gobuster dir -u http://172.17.0.2/ -t 200 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html
