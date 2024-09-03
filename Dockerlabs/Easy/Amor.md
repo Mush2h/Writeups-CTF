@@ -20,7 +20,7 @@ PORT   STATE SERVICE REASON
 ## Examining the Web Page and Its Infrastructure
 We access the web page hosted on the Apache server and find this:
 
- (Foto pagina web)
+![alt text](Imagenes/Amor_1.png)
 
 ```ruby
 Users:
@@ -40,17 +40,14 @@ However, we don't find anything, so we're going to perform a brute force attack 
 ## Intrusion
 
 Finally, we will try to authenticate to the SSH service.
+![alt text](Imagenes/Amor_2.png)
+
 ``` ruby
 user: carlota
 password: babygirl
 ```
-
-foto de intrusion
-
-
 ## Examining the imagen.jpg 
 
- 
 If we navigate through the directories, we find an image. To analyze it, it's better to download it with the following command:
 ruby
 
@@ -58,9 +55,12 @@ ruby
 scp carlota@172.17.0.2:/home/carlota/Desktop/fotos/vacaciones/imagen.jpg /home/kali/Desktop/amor/
 ```
 
+![alt text](Imagenes/Amor_3.png)
 We download the image and use tools like ExifTool or Steghide to check if there is any secret inside it.
 
-We see that if we don't enter any password, we find a secreto.txt file that contains this text:
+![alt text](Imagenes/Amor_4.png)
+
+We see that if we don't enter any password, we find a secret.txt file that contains this text:
 
 ```ruby
 ZXNsYWNhc2FkZXBpbnlwb24=
@@ -80,6 +80,7 @@ lacasadepingypong
 It seems like a possible password for some user.
 
 If we run the Hydra command but with rockyou as the username and the previous password, we get a match:
+
 ```ruby
 user: oscar
 pwd: lacasadepingypong
@@ -87,11 +88,13 @@ pwd: lacasadepingypong
 
 Therefore, we access with these credentials..
 
+
+
 ## Escalation privilege
 
 
 If we run sudo -l, we see that we can execute 
 
-
+![alt text](Imagenes/Amor_5.png)
 
 Finally, we see that we are the root user.
