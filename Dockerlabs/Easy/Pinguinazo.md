@@ -24,6 +24,7 @@ We are going to explore the version of this service. For this, we execute the fo
 nmap -sCV -p5000 172.17.0.2 
 ```
 we obtain this dataset:
+
 ![alt text](Imagenes/Pingu_1.png)
 
 
@@ -35,9 +36,11 @@ It looks like a form created with `Jinja`.
 ![alt text](Imagenes/Pingu_2.png)
 
 We can execute HTML injection to verify if it has any filters.
+
 ![alt text](Imagenes/Pingu_3.png)
 
 If we search for directories on the site with the Gobuster tool, we find `/console`
+
 We need a password to access the console.
 ![alt text](Imagenes/Pingu_4.png)
 
