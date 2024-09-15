@@ -102,4 +102,3 @@ Now, we are able to spawn a shell with root privileges if we execute the followi
 sudo /usr/bin/node /home/mario/script.js
 ```
 ![alt text](Imagenes/Node_3.png)
-
