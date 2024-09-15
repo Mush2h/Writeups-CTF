@@ -63,7 +63,7 @@ These are possible credentials for the SSH service.
 
 If we use the new credentials, we can access the SSH service.
 
-![alt text](Imagenes/Node_2.png)
+![alt text](Imagenes/Node_3.png)
 
 
 ## Escalation privilege
@@ -101,4 +101,4 @@ Now, we are able to spawn a shell with root privileges if we execute the followi
 ```ruby
 sudo /usr/bin/node /home/mario/script.js
 ```
-![alt text](Imagenes/Node_3.png)
+![alt text](Imagenes/Node_2.png)
