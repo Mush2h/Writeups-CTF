@@ -55,7 +55,7 @@ nc -lvnp 1234
 
 Therefore, we are authenticated as the "data" user
 
-# Tratamiento de la TTY
+# TTY processing
 
 To make it more comfortable for us, we're going to treat the terminal so that there are no errors in some commands and they work.
 
