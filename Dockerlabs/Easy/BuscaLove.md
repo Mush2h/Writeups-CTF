@@ -12,33 +12,28 @@ nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 172.17.0.2
 ┌──(root㉿kali)-[/home/kali]
 └─# nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 172.17.0.2  
 PORT   STATE SERVICE REASON
-21/tcp open  ftp     syn-ack ttl 64
 22/tcp open  ssh     syn-ack ttl 64
+80/tcp open  http    syn-ack ttl 64
 
 ```
 
-## Examining ports
+## Analyzing Web page and the infraestructure.
 
-More precise scan of the FTP port:
+First we need to know if exist some hide files or directories. We use gobuster tool
 
 ```ruby
-    nmap -p21 -T4 --min-rate 1000 --script vuln,ftp-anon,ftp-bounce,ftp-syst 172.17.0.2
-```
-![alt text](Imagenes/Node_1.png)
-
-We see what appears the file called secretitopicaron.zip.
-
-Similarly, I scanned the SSH port, but didn't find anything important
-
-## Analyzing "secretitopicaron.Zip"
-
-First we need to extract the hash from the .zip file. we use `zip2jonh` tool:
-
-```ruby
-zip2john secretitopicaron.zip > hash.txt
+gobuster dir -u http://172.18.0.2 -t 200 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,js,txt
 ```
 
-Once we have successfully extracted the file, our next step is to attempt to crack the password hash contained in the hash.txt file.
+we find  following:
+![alt text](Imagenes/Busca_1.png)
+
+We obtain the directory called `wordpress` so we can find some clues.
+![alt text](Imagenes/Busca_2.png)
+
+If I inspect the 
+
+![alt text](Imagenes/Busca_3.png)
 
 ```ruby
 john --wordlist=rockyou.txt hash.txt
