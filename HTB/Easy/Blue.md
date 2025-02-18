@@ -1,3 +1,5 @@
+# Blue
+
 Creamos los directorio de trabajo con el nombre de la maquina en nuestro caso Lame
 
 ```ruby
