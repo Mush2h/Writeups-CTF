@@ -1,7 +1,7 @@
 ## Cap 
 
 ## Escaneo de puertos
-REalizamos un escaneo de todos los puertos para comprobar cuales estan abiertos y lo exportamos al fichero `allports` 
+Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
 
 ```shell
 nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.10.245 -oG allports
@@ -21,7 +21,7 @@ Vamos a realizar un escaneo más exaustivo de los siguiente puertos encontrados:
 nmap -sCV -p21,22,80 10.10.10.245 -oN targeted
 ```
 
-Se puede comprobar que no encontramos nada interesante o vunerable.
+Se puede comprobar que no encontramos nada interesante o vulnerable.
 
 ```shell
 PORT   STATE SERVICE VERSION
@@ -79,7 +79,7 @@ ftp> get user.txt
 
 ## Acceso ssh
 
-Con estas credenciales intentamos accder al servicio ssh y comprobar si podemos acceder.
+Con estas credenciales intentamos acceder al servicio ssh y comprobar si podemos acceder.
 
 ```shell
 ssh nathan@10.10.10.245
@@ -91,13 +91,13 @@ Comprobamos que recursos podemos ejecutar como root usamos el siguiente comando:
 ```shell
 sudo -l
 ```
-Sin embargo no obtenemos nada
+Sin embargo no obtenemos nada.
 ```shell
 nathan@cap:~$ sudo -l
 [sudo] password for nathan: 
 Sorry, user nathan may not run sudo on cap
 ```
-Comprobamos los ficheros que tenemos para explotar los permisos de SUID
+Comprobamos los ficheros que tenemos para explotar los permisos de SUID.
 ```shell
 find / -perm -4000 -user root 2>/dev/null | xargs ls -l
 ```
