@@ -1,6 +1,6 @@
-## Cap 
+# Cap 
 
-## Escaneo de puertos
+## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
 
 ```shell
