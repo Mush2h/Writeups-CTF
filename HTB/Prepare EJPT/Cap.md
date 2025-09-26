@@ -1,5 +1,9 @@
 # Cap 
 
+• Insecure Directory Object Reference (IDOR)
+• Information Leakage
+• Abusing Capabilities (Python3.8) [Privilege Escalation]
+
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
 
