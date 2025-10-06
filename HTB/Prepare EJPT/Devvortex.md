@@ -158,7 +158,7 @@ por lo tanto vamos a intentar enumerar la BD.
 Intentamos acceder a la BD usando el siguiente comando:
 
 ```shell
-mysql -ulewis -p P4ntherg0t1n5r3c0n##
+mysql -u lewis -p P4ntherg0t1n5r3c0n##
 ```
 
 Accedemos a la BD y enumeramos las BD y base de datos que tengamos. Finalmente encontramos una tabla `sd4fg_users`que si vemos que contiene es: 
