@@ -26,7 +26,7 @@ Vamos a realizar un escaneo más exaustivo de los siguiente puertos encontrados:
 nmap -sCV -p22,80 10.10.10.245 -oN targeted
 ```
 
-Sin embargo no en
+Sin embargo no encontramos nada interesante
 
 ## Enumeración de sudominios
 
