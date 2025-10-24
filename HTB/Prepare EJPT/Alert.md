@@ -70,7 +70,7 @@ statistics.alert.htb Status: 401 [Size: 467]
 
 Nos encontramos con una página que al parecer procesa ficheros en `markdown` por lo tanto voy a crear varios para ver como se visualiza.
 
-![alt text](image.png)
+![alt text](Imagenes/Alert.png)
 
 buscando si existen vulnerabilidades encontramos que se puede intentar acontecer un ataque XSS para obtener datos relevantes y enviarlo con el enlace al "administrador" por el apartado que tienen para contactar con ellos.
  
