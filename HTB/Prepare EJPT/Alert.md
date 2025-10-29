@@ -1,6 +1,7 @@
 # Alert
 | ![Alert](portadas/alert.png) | 
 |:--:|
+| *Imagen de portada* |
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
