@@ -2,13 +2,11 @@
 
 <table>
   <tr>
-    <td style="vertical-align: top; padding-right: 20px;">
+    <td style="vertical-align: top; padding-right: 20px; max-width: 60%;">
       <strong>Vulnerabilidades a tratar</strong>
       <ul>
-        <li>SNMP Enumeration</li>
-        <li>Network Printer Abuse</li>
-        <li>Local Pivoting / Proxy Setup</li>
-        <li>CUPS Administration exploitation</li>
+        <li>Cross-Site Scripting (XSS)</li>
+        <li>Arbitrary File Read</li>
       </ul>
     </td>
     <td style="vertical-align: top;">
