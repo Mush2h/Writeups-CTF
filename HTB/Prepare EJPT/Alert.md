@@ -1,4 +1,5 @@
 # Alert
+<img src="portadas/alert.png" alt="Alert" align="right" width="250" style="margin-left:15px;"/>
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
