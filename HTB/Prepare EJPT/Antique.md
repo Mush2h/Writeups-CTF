@@ -1,8 +1,20 @@
 # Antique
-- SNMP Enumeration
-- Network Printer Abuse
-- Local Pivoting/Proxy Setup
-- CUPS Administration exploitation
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/antique.png" alt="antique" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>SNMP Enumeration</li>
+        <li>Network Printer Abuse</li>
+        <li>Local Pivoting / Proxy Setup</li>
+        <li>CUPS Administration exploitation</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

@@ -1,8 +1,19 @@
 # Cap 
-
-• Insecure Directory Object Reference (IDOR)
-• Information Leakage
-• Abusing Capabilities (Python3.8) [Privilege Escalation]
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/cap.png" alt="cap" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Insecure Directory Object Reference (IDOR)</li>
+        <li>Information Leakage</li>
+        <li>Abusing Capabilities (Python3.8) [Privilege Escalation]</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

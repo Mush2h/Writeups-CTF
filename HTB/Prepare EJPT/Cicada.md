@@ -1,5 +1,20 @@
 # Cicada
-
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Cicada.png" alt="Cicada" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Active Directory Enumeration and Privilege Escalation</li>
+        <li>Password Spraying</li>
+        <li>SeBackup Privilege Abuse</li>
+        <li>Pass-the-Hash Attack</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 ## Reconocimiento inicial 
 
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

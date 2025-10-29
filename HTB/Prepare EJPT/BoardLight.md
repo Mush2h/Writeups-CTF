@@ -1,10 +1,21 @@
 # BoardLight
 
-
-• Subdomain Enumeration
-• Dolibarr 17.0.0 Exploitation - CVE-2023-30253
-• Information Leakage (User Pivoting)
-• Enlightenment SUID Binary Exploitation [Privilege Escalation]
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/BoardLight.png" alt="BoardLight" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Subdomain Enumeration</li>
+        <li>Dolibarr 17.0.0 Exploitation - CVE-2023-30253</li>
+        <li>Information Leakage (User Pivoting)</li>
+        <li>Enlightenment SUID Binary Exploitation [Privilege Escalation]</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

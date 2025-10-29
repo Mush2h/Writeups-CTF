@@ -1,12 +1,22 @@
 # Devvortex
-
-* Enumeración de Subdominios 
-* Abusando de Jommla
-* Joomla Exploitation (CVE-2023-23752)
-* Personalizando plantilla de administracion para RCE 
-* Enumeracion de base de datos (User Pivoting)
-* Abusando de sudoers  (apport-cli) [Privilege Escalation] (CVE-2023-1326)
-
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/BoardLight.png" alt="Imagen" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Enumeración de Subdominios</li>
+        <li>Abusando de Joomla</li>
+        <li>Joomla Exploitation (CVE-2023-23752)</li>
+        <li>Personalizando plantilla de administración para RCE</li>
+        <li>Enumeración de base de datos (User Pivoting)</li>
+        <li>Abusando de sudoers (apport-cli) [Privilege Escalation] (CVE-2023-1326)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 ## Reconocimiento inicial
 Primero lanzamos un escaneo básico de recnocimiento sobre el objetivo:
 

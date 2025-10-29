@@ -1,5 +1,21 @@
-# Conversion
-
+# Conversor
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Conversor.png" alt="Conversor" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>XSLT Injection / RCE</li>
+        <li>Arbitrary File Read (users.db)</li>
+        <li>Weak password hashes (MD5) → Credential compromise / SSH access</li>
+        <li>Cron-executed scripts (scripts/*.py) → RCE persistence</li>
+        <li>Sudo NOPASSWD on <code>/usr/sbin/needrestart</code> → Privilege Escalation</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
 
