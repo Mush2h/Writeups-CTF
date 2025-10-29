@@ -1,16 +1,27 @@
 # Alert
 
-| <img src="portadas/alert.png" alt="Alert" width="300"/> | **Vulnerabilidad:** `XSS (Markdown Viewer - Stored)`  <br/>  
-  **Objetivo:** conseguir que el administrador cargue/abra contenido malicioso para exfiltrar datos. <br/>  
-  **Vector:** subida/renderizado de ficheros Markdown (index.php?page=alert). |
-|---|---|
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <strong>Vulnerabilidades a tratar</strong>
+      <ul>
+        <li>SNMP Enumeration</li>
+        <li>Network Printer Abuse</li>
+        <li>Local Pivoting / Proxy Setup</li>
+        <li>CUPS Administration exploitation</li>
+      </ul>
+    </td>
+    <td style="vertical-align: top;">
+      <img src="portadas/alert.png" alt="Alert" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+  </tr>
+</table>
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles están abiertos y lo exportamos al fichero `allports`.
 
 ```shell
 nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.11.44 -oG allports
-
 ```
 
 ```shell
