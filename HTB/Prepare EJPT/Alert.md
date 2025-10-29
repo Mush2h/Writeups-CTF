@@ -1,14 +1,16 @@
 # Alert
+
 | <img src="portadas/alert.png" alt="Alert" width="300"/> | **Vulnerabilidad:** `XSS (Markdown Viewer - Stored)`  <br/>  
   **Objetivo:** conseguir que el administrador cargue/abra contenido malicioso para exfiltrar datos. <br/>  
   **Vector:** subida/renderizado de ficheros Markdown (index.php?page=alert). |
 |---|---|
 
 ## Reconocimiento inicial
-Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
+Realizamos un escaneo de todos los puertos para comprobar cuáles están abiertos y lo exportamos al fichero `allports`.
 
 ```shell
 nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.11.44 -oG allports
+
 ```
 
 ```shell
