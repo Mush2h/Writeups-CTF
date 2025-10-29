@@ -1,9 +1,21 @@
 # Paper
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Paper.png" alt="Imagen" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Information Leakage</li>
+        <li>Abusing WordPress - Unauthenticated View Private/Draft Posts</li>
+        <li>Abusing Rocket.Chat Bot</li>
+        <li>Polkit (CVE-2021-3560) [Privilege Escalation]</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-• Information Leakage
-• Abussing WordPress - Unauthenticated View Private/Draft Posts
-• Abusing Rocket Chat Bot
-• Polkit (CVE-2021-3560) [Privilege Escalation]
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

@@ -1,9 +1,19 @@
 # Legacy
-
-• SMB Enumeration
-• Eternalblue Exploitation (MS17-010) [Triple Z Exploit]
-• SMB Enumeration
-• Eternalblue Exploitation (MS17-010) [Triple Z Exploit]
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Legacy.png" alt="Imagen" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>SMB Enumeration</li>
+        <li>EternalBlue Exploitation (MS17-010) [Triple Z Exploit]</li>
+        <li>Privilege Escalation post-EternalBlue</li>
+      </ul>
+    </td>
+  </tr>
+</table>Eternalblue Exploitation (MS17-010) [Triple Z Exploit]
 
 
 ## Reconocimiento inicial

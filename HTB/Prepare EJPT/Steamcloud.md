@@ -1,11 +1,25 @@
 # Steamcloud
-• Kubernetes API Enumeration (kubectl)
-• Kubelet API Enumeration (kubeletctl)
-• Command Execution through kubeletctl on the containers
-• Cluster Authentication (ca.crt/token files) with kubectl
-• Creating YAML file for POD creation
-• Executing commands on the new POD
-• Reverse Shell through YAML file while deploying the POD
+
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/SteamCloud.png" alt="Imagen" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Kubernetes API Enumeration (kubectl)</li>
+        <li>Kubelet API Enumeration (kubeletctl)</li>
+        <li>Command Execution through kubeletctl on the containers</li>
+        <li>Cluster Authentication (ca.crt / token files) with kubectl</li>
+        <li>Creating YAML file for POD creation</li>
+        <li>Executing commands on the new POD</li>
+        <li>Reverse Shell through YAML file while deploying the POD</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

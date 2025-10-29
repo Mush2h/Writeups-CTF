@@ -1,11 +1,23 @@
 # Twomillions
-• Building a Python3 Stealth port scanner with Scapy
-• Abusing declared Javascript functions from the browser console
-• Abusing the API to generate a valid invite code
-• Abusing the API to elevate our privilege to administrator
-• Command injection via poorly designed API functionality
-• Information Leakage
-• Privilege Escalation via Kernel Exploitation (CVE-2023-0386) - OverlayFS Vulnerability
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Twomillion.png" alt="Imagen" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>Abusing declared Javascript functions from the browser console</li>
+        <li>Abusing the API to generate a valid invite code</li>
+        <li>Abusing the API to elevate our privilege to administrator</li>
+        <li>Command injection via poorly designed API functionality</li>
+        <li>Information Leakage</li>
+        <li>Privilege Escalation via Kernel Exploitation (CVE-2023-0386) - OverlayFS Vulnerability</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 

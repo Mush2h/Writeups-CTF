@@ -1,5 +1,22 @@
 # Expressway
-
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Expressway.png" alt="Expressway" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>IKE (Aggressive Mode) — PSK hash disclosure</li>
+        <li>Weak/guessable PSK — PSK cracked via wordlist → Credential compromise</li>
+        <li>SSH access obtained (usuario <code>ike</code>)</li>
+        <li>Lista de servicios UDP relevantes (ISAKMP / IKE)</li>
+        <li>Non-standard SUID binary: <code>/usr/local/bin/sudo</code> (version 1.9.17)</li>
+        <li>Privilege Escalation vía CVE-2025-32463 (exploit publicado)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 ## Reconocimiento inicial
 Primero lanzamos un escaneo básico de recnocimiento sobre el objetivo:
 
