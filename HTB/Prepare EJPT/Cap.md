@@ -2,7 +2,7 @@
 <table>
   <tr>
     <td style="vertical-align: top; padding-right: 20px;">
-      <img src="portadas/Cap.png" alt="cap" style="max-width:320px; width:100%; height:auto;"/>
+      <img src="portadas/Cap.png" alt="Cap" style="max-width:320px; width:100%; height:auto;"/>
     </td>
     <td style="vertical-align: top; padding-left: 20px;">
       <strong>Vulnerabilidades / Características a tratar</strong>
