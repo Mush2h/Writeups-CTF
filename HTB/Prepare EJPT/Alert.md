@@ -1,7 +1,8 @@
 # Alert
-| ![Alert](portadas/alert.png) | 
-|:--:|
-| *Imagen de portada* |
+| <img src="portadas/alert.png" alt="Alert" width="300"/> | **Vulnerabilidad:** `XSS (Markdown Viewer - Stored)`  <br/>  
+  **Objetivo:** conseguir que el administrador cargue/abra contenido malicioso para exfiltrar datos. <br/>  
+  **Vector:** subida/renderizado de ficheros Markdown (index.php?page=alert). |
+|---|---|
 
 ## Reconocimiento inicial
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
