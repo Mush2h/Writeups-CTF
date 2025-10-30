@@ -10,7 +10,7 @@
       <ul>
         <li>WordPress Enumeration</li>
         <li>Information Leakage</li>
-        <li>Analyzing a jar file - JD-Gui +SSH Access</li>
+        <li>Analyzing a jar file - JD-Gui + SSH Access</li>
         <li>Abusing Sudoers Privilege</li>
       </ul>
     </td>
