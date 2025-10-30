@@ -1,5 +1,5 @@
 # Blocky
-![alt text](image.png)
+
 <table>
   <tr>
     <td style="vertical-align: top; padding-right: 20px;">
