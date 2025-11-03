@@ -7,10 +7,11 @@
     <td style="vertical-align: top; padding-left: 20px;">
       <strong>Vulnerabilidades / Características a tratar</strong>
       <ul>
-        <li>Active Directory Enumeration and Privilege Escalation</li>
-        <li>Password Spraying</li>
-        <li>SeBackup Privilege Abuse</li>
-        <li>Pass-the-Hash Attack</li>
+        <li>SMB Enumeration</li>
+        <li>Information Leakage</li>
+        <li>RID Brute with Netexec for Potential User Discovery</li>
+        <li>Information Leakage through Rpcclient (querydispinfo)</li>
+        <li>Abusing SeBackupPrivilege/SeRestorePrivilege [Privilege Escalation]</li>
       </ul>
     </td>
   </tr>

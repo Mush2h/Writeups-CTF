@@ -7,8 +7,11 @@
     <td style="vertical-align: top; padding-left: 20px;">
       <strong>Vulnerabilidades / Características a tratar</strong>
       <ul>
-        <li>Locating recently modified files</li>
-        <li>Basic web fuzzing techniques</li>
+        <li>Web Enumeration</li>
+        <li>Abusing WebShell Utility (RCE)</li>
+        <li>Abusing Sudoers Privilege (User Pivoting)</li>
+        <li>Detecting Cron Jobs Running on the System</li>
+        <li>Exploiting Cron Job Through File Manipulation in Python Executed by Root [Privilege Escalation]</li>
       </ul>
     </td>
   </tr>

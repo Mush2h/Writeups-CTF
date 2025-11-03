@@ -7,8 +7,11 @@
     <td style="vertical-align: top; padding-left: 20px;">
       <strong>Vulnerabilidades a tratar</strong>
       <ul>
-        <li>Cross-Site Scripting (XSS)</li>
-        <li>Arbitrary File Read</li>
+        <li>Cross-Site Scripting (XSS) - Via Markdown</li>
+        <li>Discovering LFI accessible from XSS</li>
+        <li>Cracking Hashes</li>
+        <li>Exploiting Web Service Executed by Root</li>
+        <li>Creating a Malicious php File in Writable Path [Privilege Escalation]</li>
       </ul>
     </td>
   </tr>

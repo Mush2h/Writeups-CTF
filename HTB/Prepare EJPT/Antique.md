@@ -10,7 +10,8 @@
         <li>SNMP Enumeration</li>
         <li>Network Printer Abuse</li>
         <li>Local Pivoting / Proxy Setup</li>
-        <li>CUPS Administration exploitation</li>
+        <li>CUPS Administration exploitation (Error Log)</li>
+        <li>(DirtyPipe) [CVE-2022-0847]</li>
       </ul>
     </td>
   </tr>
