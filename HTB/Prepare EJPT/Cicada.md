@@ -120,7 +120,7 @@ kerbrute userenum --dc 10.10.11.35 -d cicada.htb /usr/share/seclists/Usernames/x
 
 Nos encontramos que de esta manera encontramos dos usuarioos un `guest` y otro Administrator
 
-```
+```shell
 netexec smb 10.10.11.35 --shares
 SMB         10.10.11.35     445    CICADA-DC        [*] Windows Server 2022 Build 20348 x64 (name:CICADA-DC) (domain:cicada.htb) (signing:True) (SMBv1:False)
 SMB         10.10.11.35     445    CICADA-DC        [-] Error enumerating shares: STATUS_USER_SESSION_DELETED
