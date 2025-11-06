@@ -22,7 +22,7 @@
 Realizamos un escaneo de todos los puertos para comprobar cuáles estan abiertos y lo exportamos al fichero `allports` 
 
 ```shell
-nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.11.98 -oG allports
+nmap -p- --open -sS --min-rate 5000 -vvv -n -Pn 10.10.10.8 -oG allports
 ```
 
 ```shell
@@ -114,11 +114,8 @@ PORT   STATE SERVICE VERSION
 Service Info: OS: Windows; CPE: cpe:/o:microsoft:window
 ```
 
-```shell
-http://10.10.11.92 [301 Moved Permanently] Apache[2.4.52], Country[RESERVED][ZZ], HTTPServer[Ubuntu Linux][Apache/2.4.52 (Ubuntu)], IP[10.10.11.92], RedirectLocation[http://conversor.htb/], Title[301 Moved Permanently]    
-http://conversor.htb/ [302 Found] Apache[2.4.52], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.52 (Ubuntu)], IP[10.10.11.92], RedirectLocation[/login], Title[Redirecting...]                            
-http://conversor.htb/login [200 OK] Apache[2.4.52], Country[RESERVED][ZZ], HTML5, HTTPServer[Ubuntu Linux][Apache/2.4.52 (Ubuntu)], IP[10.10.11.92], PasswordField[password], Title[Login]
-```
+
+![alt text](image.png)
 
 ## Intrusion 
 
