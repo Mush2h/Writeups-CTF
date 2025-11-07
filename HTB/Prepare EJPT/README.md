@@ -11,7 +11,7 @@
 | 5  | **BoardLight** | ✅ Resuelta | Subdomain / CVE-2023-30253 / user Pivoting / Enlightenment SUID | `nmap`, `wfuzz`, `exploit-db` |
 | 6  | **Cap** | ✅ Resuelta | Packet capture / cred sniffing | `wireshark`|
 | 7  | **Chemistry** | 🔄 Pendiente | – | – |
-| 8  | **Code** | 🔄 Pendiente | – | – |
+| 8  | **Code** | ✅ Resuelta | Web Enumeration / Python Restriction Bypass / Directory Path Traversal Restriction Bypass + Abusing Sudoers Privilege [Privilege Escalation] | `nmap`, `hashcat`, `sqlite3` |
 | 9  | **CozyHosting** | 🔄 Pendiente | – | – |
 | 10 | **Crafty** | 🔄 Pendiente | – | – |
 | 11 | **Delivery** | 🔄 Pendiente | – | – |
