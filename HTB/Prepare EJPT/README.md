@@ -10,7 +10,7 @@
 | 4  | **Blocky** | ✅ Resuelta | WordPress / JD-gui | `wpscan`, `hashcat`, `Wfuzz` |
 | 5  | **BoardLight** | ✅ Resuelta | Subdomain / CVE-2023-30253 / user Pivoting / Enlightenment SUID | `nmap`, `wfuzz`, `exploit-db` |
 | 6  | **Cap** | ✅ Resuelta | Packet capture / cred sniffing | `wireshark`|
-| 7  | **Chemistry** | 🔄 Pendiente | – | – |
+| 7  | **Chemistry** | ✅ Resuelta | Malicious CIF File (RCE) / SQLite Database File Enumeration / aiohttp/3.9.1 Exploitation CVE-2024-23334  | `nmap`, `hashcat`, `sqlite3` |
 | 8  | **Code** | ✅ Resuelta | Web Enumeration / Python Restriction Bypass / Directory Path Traversal Restriction Bypass + Abusing Sudoers Privilege [Privilege Escalation] | `nmap`, `hashcat`, `sqlite3` |
 | 9  | **CozyHosting** | 🔄 Pendiente | – | – |
 | 10 | **Crafty** | 🔄 Pendiente | – | – |
@@ -24,7 +24,7 @@
 | 18 | **Horizontal** | 🔄 Pendiente | – | – |
 | 19 | **Irked** | 🔄 Pendiente | – | – |
 | 20 | **Jerry** | 🔄 Pendiente | – | – |
-| 21 | **Keeper** | 🟠 Falta reporte | KeePass / cred decrypt | `nmap`, `cewl`, `john` |
+| 21 | **Keeper** | 🟠 Falta reporte escalada | KeePass / cred decrypt | `nmap`, `cewl`, `john` |
 | 22 | **Knife** | ✅ Resuelta | PHP 8.1.0-dev RCE / knife binary | `nmap`, `curl`, `reverse shell` |
 | 23 | **Lame** | 🔄 Pendiente | – | – |
 | 24 | **Legacy** | ✅ Resuelta | SMB Enumeration / EternalBlue MS17-010 / CVE-2008-4250 | `nmap`, `smbclient`, `msfconsole` |
